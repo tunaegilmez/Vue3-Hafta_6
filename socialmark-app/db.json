@@ -1,0 +1,18 @@
+{
+  "users": [
+    {
+      "username": "tegilmez",
+      "fullname": "Tuna Eğilmez",
+      "password": "4fc702bb80ff79e2115cc0e59dc5242a5fe77dff",
+      "id": 1
+    },
+    {
+      "username": "zdaglar",
+      "fullname": "Zeynep Dağlar",
+      "password": "4fc702bb80ff79e2115cc0e59dc5242a5fe77dff",
+      "id": 2
+    }
+  ],
+  "bookmarks": [],
+  "categories": []
+}
