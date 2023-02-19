@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white flex flex-col gap-x-3 rounded-md shadow-sm">
     <div class="p-3">
-      <a href="#" class="hover:text-black font-bold text-l mb-1 text-gray-600 text-center">Vue3 Dokümantasyon</a>
+      <a :href="item.url" target="_blank" class="hover:text-black font-bold text-l mb-1 text-gray-600 text-center">{{ item.title || "-" }}</a>
       <div class="flex items-center justify-center mt-2 gap-x-1">
         <button class="like-btn group">
           <svg xmlns="http://www.w3.org/2000/svg" class="fill-current group-hover:text-white" height="24" viewBox="0 0 24 24" width="24">
@@ -11,15 +11,8 @@
             />
           </svg>
         </button>
-        <button class="bookmark-btn group bookmark-item-active">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="fill-current group-hover:text-white"
-            enable-background="new 0 0 24 24"
-            viewBox="0 0 24 24"
-            width="24"
-            height="24"
-          >
+        <button class="bookmark-btn group">
+          <svg xmlns="http://www.w3.org/2000/svg" class="fill-current group-hover:text-white" enable-background="new 0 0 24 24" viewBox="0 0 24 24" width="24" height="24">
             <rect fill="none" />
             <path d="M17,11v6.97l-5-2.14l-5,2.14V5h6V3H7C5.9,3,5,3.9,5,5v16l7-3l7,3V11H17z M21,7h-2v2h-2V7h-2V5h2V3h2v2h2V7z" />
           </svg>
@@ -33,17 +26,38 @@
               />
             </svg>
             <p class="details-container">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Similique nemo consequatur a accusamus assumenda laborum consequuntur
-              explicabo dolor, odit eligendi voluptate illum itaque accusantium, cumque tenetur cupiditate illo libero dolores!
+              {{ item.description }}
             </p>
           </button>
         </div>
       </div>
       <div class="text-xs text-gray-400 mt-2 flex justify-between">
-        <a href="#" class="hover:text-black"> Gökhan Kandemir </a>
+        <a href="#" class="hover:text-black"> {{ userName }} </a>
         <span>14 Mart</span>
       </div>
     </div>
-    <div class="bg-red-200 p-1 text-red-900 text-center text-sm">Vue.js</div>
+    <div class="bg-red-200 p-1 mt-auto text-red-900 text-center text-sm">{{ categoryName }}</div>
   </div>
 </template>
+
+<script>
+import { mapGetters } from "vuex";
+export default {
+  props: {
+    item: {
+      type: Object,
+      required: true,
+      default: () => {},
+    },
+  },
+  computed: {
+    categoryName() {
+      return this.item?.category?.name || "-";
+    },
+    userName() {
+      return this.item?.user?.fullname || "-";
+    },
+    ...mapGetters(["_getCurrentUser"]),
+  },
+};
+</script>
