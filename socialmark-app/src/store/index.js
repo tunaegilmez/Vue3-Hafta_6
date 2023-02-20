@@ -8,13 +8,19 @@ export default createStore({
   state: {
     user: null,
     saltKey: "booklike21!34?",
+    likes: [],
   },
   mutations: {
     setUser(state, user) {
+      console.log("set user", state, user);
       state.user = user;
     },
     logoutUser(state) {
       state.user = null;
+    },
+    addToLikes(state, bookmarkId) {
+      console.log("state.users", state.user);
+      state.user.likes.push(bookmarkId);
     },
   },
   getters: {
@@ -24,6 +30,12 @@ export default createStore({
       delete user?.password;
       return user;
     },
+    _userLikes: (state) => {
+      console.log(state.user?.likes || [], "_userLikes getters");
+      return state.user?.likes || [];
+    },
+    _userBookmarks: (state) => state.user?.bookmarks || [],
+    _currentUserId: (state) => state?.user?.id,
     _saltKey: (state) => state.saltKey,
   },
   plugins: [

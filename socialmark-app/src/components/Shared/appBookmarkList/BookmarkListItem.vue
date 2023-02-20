@@ -3,7 +3,7 @@
     <div class="p-3">
       <a :href="item.url" target="_blank" class="hover:text-black font-bold text-l mb-1 text-gray-600 text-center">{{ item.title || "-" }}</a>
       <div class="flex items-center justify-center mt-2 gap-x-1">
-        <button class="like-btn group">
+        <button @click="likeItem" class="like-btn group">
           <svg xmlns="http://www.w3.org/2000/svg" class="fill-current group-hover:text-white" height="24" viewBox="0 0 24 24" width="24">
             <path d="M0 0h24v24H0V0zm0 0h24v24H0V0z" fill="none" />
             <path
@@ -50,6 +50,16 @@ export default {
       default: () => {},
     },
   },
+  methods: {
+    likeItem() {
+      const likes = [...this._userLikes, this.item.id];
+      console.log(this._userLikes, "likes  ");
+      this.$appAxios.patch(`/users/${this._getCurrentUser.id}`, { likes }).then((res) => {
+        console.log(this._userLikes, "likeItem---");
+        this.$store.commit("addToLikes", this.item.id);
+      });
+    },
+  },
   computed: {
     categoryName() {
       return this.item?.category?.name || "-";
@@ -57,7 +67,7 @@ export default {
     userName() {
       return this.item?.user?.fullname || "-";
     },
-    ...mapGetters(["_getCurrentUser"]),
+    ...mapGetters(["_getCurrentUser", "_userLikes"]),
   },
 };
 </script>
