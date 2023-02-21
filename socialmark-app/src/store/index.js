@@ -18,9 +18,12 @@ export default createStore({
     logoutUser(state) {
       state.user = null;
     },
-    addToLikes(state, bookmarkId) {
+    setLikes(state, bookmarkIds) {
       console.log("state.users", state.user);
-      state.user.likes.push(bookmarkId);
+      state.user.likes = bookmarkIds;
+    },
+    setBookmarks(state, bookmarkIds) {
+      state.user.bookmarks = bookmarkIds;
     },
   },
   getters: {
@@ -30,10 +33,7 @@ export default createStore({
       delete user?.password;
       return user;
     },
-    _userLikes: (state) => {
-      console.log(state.user?.likes || [], "_userLikes getters");
-      return state.user?.likes || [];
-    },
+    _userLikes: (state) => state.user?.likes || [],
     _userBookmarks: (state) => state.user?.bookmarks || [],
     _currentUserId: (state) => state?.user?.id,
     _saltKey: (state) => state.saltKey,
