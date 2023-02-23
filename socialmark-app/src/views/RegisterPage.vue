@@ -7,14 +7,12 @@
     <button class="default-button" @click="onSave">Kayıt ol</button>
     <span class="text-center mt-3 text-sm">
       Zaten Üyeyim,
-      <router-link :to="{ name: 'LoginPage' }" class="text-red-900 hover:text-black">Giriş yap!</router-link>
+      <router-link :to="{ name: 'LoginPage' }" class="text-red-900 hover:text-black"> Giriş yap! </router-link>
     </span>
   </div>
 </template>
-
 <script>
 import CryptoJS from "crypto-js";
-
 export default {
   data() {
     return {
@@ -28,19 +26,12 @@ export default {
   methods: {
     onSave() {
       const password = CryptoJS.HmacSHA1(this.userData.password, this.$store.getters._saltKey).toString();
-      // console.log("password =>", password);
-      this.$appAxios
-        .post("/users", { ...this.userData, password })
-        .then((result) => {
-          console.log(result);
-          this.$router.push({ name: "HomePage" });
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-
+      this.$appAxios.post("/users", { ...this.userData, password }).then((registered_user_response) => {
+        console.log("registered_user_response :>> ", registered_user_response);
+        this.$router.push({ name: "HomePage" });
+      });
       // const decryptedPassword = CryptoJS.AES.decrypt(cryptedPassword, key).toString(CryptoJS.enc.Utf8);
-      // console.log(decryptedPassword);
+      // console.log("decryptedPassword :>> ", decryptedPassword);
       // console.log(this.userData);
     },
   },

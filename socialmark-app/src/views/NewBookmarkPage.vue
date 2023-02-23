@@ -14,7 +14,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import { mapGetters } from "vuex";
 export default {
@@ -34,6 +33,14 @@ export default {
       // console.log(category_response);
       this.categoryList = category_response?.data || [];
     });
+    // setTimeout(() => {
+    //   console.log(this.$refs.title);
+    // }, 100);
+    // this.$nextTick(() => {
+    //   console.log(this.$refs.title);
+    // })
+    // console.dir(this.$refs.title);
+    // this.$refs.title.focus();
   },
   methods: {
     onSave() {
@@ -45,6 +52,12 @@ export default {
       this.$appAxios.post("/bookmarks", saveData).then((save_bookmark_response) => {
         console.log(save_bookmark_response);
         Object.keys(this.userData)?.forEach((field) => (this.userData[field] = null));
+        const socketData = {
+          ...save_bookmark_response.data,
+          user: this._getCurrentUser,
+          category: this.categoryList?.find((c) => c.id === saveData.categoryId),
+        };
+        this.$socket.emit("NEW_BOOKMARK_EVENT", socketData);
         this.$router.push({ name: "HomePage" });
       });
     },

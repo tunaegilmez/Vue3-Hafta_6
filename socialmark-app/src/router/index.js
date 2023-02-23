@@ -1,6 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import store from "../store";
-
 const routes = [
   {
     name: "HomePage",
@@ -25,11 +24,10 @@ const routes = [
   {
     name: "Favorites",
     path: "/favorites",
-    // meta: "appBookmarkList",
     meta: {
       componentName: "appBookmarkList",
     },
-    component: () => import("@/views/AccountPage.vue"),
+    component: () => import("@/views/Account"),
   },
   {
     name: "Likes",
@@ -37,16 +35,15 @@ const routes = [
     meta: {
       componentName: "appBookmarkList",
     },
-    component: () => import("@/views/AccountPage.vue"),
+    component: () => import("@/views/Account"),
   },
   {
     name: "Settings",
     path: "/settings",
-    // meta: "userSettings",
     meta: {
       componentName: "userSettings",
     },
-    component: () => import("@/views/AccountPage.vue"),
+    component: () => import("@/views/Account"),
   },
 ];
 
@@ -68,9 +65,6 @@ router.beforeEach((to, _, next) => {
   } else {
     next();
   }
-  // if (_isAuthenticated) {
-  //   next();
-  // }
 });
 
 export default router;

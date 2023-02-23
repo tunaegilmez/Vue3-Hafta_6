@@ -1,25 +1,23 @@
 import { createStore } from "vuex";
-
 import createPersistedState from "vuex-persistedstate";
+
 import SecureLS from "secure-ls";
 var ls = new SecureLS({ isCompression: false });
 
 export default createStore({
   state: {
     user: null,
-    saltKey: "booklike21!34?",
-    likes: [],
+    saltKey: "booklike123!456?",
   },
   mutations: {
     setUser(state, user) {
-      console.log("set user", state, user);
+      console.log("user :>> ", user);
       state.user = user;
     },
     logoutUser(state) {
       state.user = null;
     },
     setLikes(state, bookmarkIds) {
-      console.log("state.users", state.user);
       state.user.likes = bookmarkIds;
     },
     setBookmarks(state, bookmarkIds) {
@@ -30,6 +28,9 @@ export default createStore({
     _isAuthenticated: (state) => state.user !== null,
     _getCurrentUser(state) {
       const user = state.user;
+      //   if(user !== null && user.hasOwnProperty("password")){
+      //       delete user.password;
+      //   }
       delete user?.password;
       return user;
     },
